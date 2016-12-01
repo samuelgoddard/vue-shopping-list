@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="styles/app.css">
+
+</head>
+<body>
+
+<div class="container">
+    <div id="tasks">
+
+    <h1>Shopping List</h1>
+
+        <form v-on="submit: addTask">
+            <div class="form-group">
+                <input v-model="newTask" v-el="newTask" class="form-control" placeholder="I need to buy.."></input>
+            </div>
+
+            <button class="btn btn-primary">Add Item</button>
+            <button v-on="click: completeAll" class="btn btn-default">Mark All As Completed?</button>
+        </form>
+
+
+        <!-- The List of Todos -->
+        <div v-show="remaining.length">
+            <h2>Need to buy ({{ remaining.length }})</h2>
+
+            <ol class="list-group">
+                <li v-repeat="task: remaining" class="list-group-item">
+                    <span v-on="dblclick: editTask(task)">{{ task.body }}</span>
+                    <button v-on="click: removeTask(task)">&#10007;</button>
+                    <button v-on="click: toggleTaskCompletion(task)">&#10004</button>
+                </li>
+            </ol>
+        </div>
+
+
+        <!-- The List of Completed Tasks -->
+        <div v-if="completions.length">
+            <h2>Purchased ({{ completions.length }})</h2>
+
+            <ol class="list-group">
+                <li v-repeat="task: completions" class="list-group-item">
+                    {{ task.body }}
+                    <button v-on="click: toggleTaskCompletion(task)">&#10007;</button>
+                </li>
+            </ol>
+
+            <button v-on="click: clearCompleted" class="btn btn-danger">Clear Completed</button>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/0.11.10/vue.min.js"></script>
+<script src="scripts/app.js"></script>
+
+</body>
+</html>
